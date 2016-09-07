@@ -5,20 +5,7 @@
       }
 #map { height: 100%; }
 
-   #floating-panel {
-        position: absolute;
-        top: 10px;
-        left: 25%;
-        z-index: 5;
-        background-color: #fff;
-        padding: 5px;
-        border: 1px solid #999;
-        text-align: center;
-        font-family: 'Roboto','sans-serif';
-        line-height: 30px;
-        padding-left: 10px;
-      }
-      #floating-panel {
+      #floating-panel-search {
         position: absolute;
         top: 5px;
         left: 50%;
@@ -28,4 +15,27 @@
         background-color: #fff;
         padding: 5px;
         border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
       }
+
+
+      #floating-panel-thirdParty {
+        position: absolute;
+        top: 750px;
+        left: 13%;
+        margin-left: -180px;
+        width: 1500px;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+
+
