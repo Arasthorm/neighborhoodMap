@@ -22,23 +22,26 @@
     <div id="floating-panel-thirdParty">
         <div class="container">
             <div class="row" >
-                <div class="col-md-6" style="border-right: solid;">
+                <div class="col-md-6">
                     <div class="wikipedia-container">
                         <h3>Wikipedia:</h3>
                         <ul id="wikipedia-links"></ul>
                     </div>
-
-
                 </div>
 
-                <div class="col-md-6">
-                    <h3>Yelp:</h3>
 
+                <div class="col-md-6" style="border-left: solid;">
+                    <h3>Flickr:</h3>
+                    <div class="row" id="Flickr-links">
+
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <script src="js/node_modules/flickrapi/browser/flickrapi.js"></script>
     <script src="libs/jquery.min.js"></script>
     <script async defer
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAaFSMetONhFfqC53D9GM3CMqe8GU0plhg&callback=initMap">

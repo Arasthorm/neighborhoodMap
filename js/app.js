@@ -28,27 +28,58 @@ var labelIndex = 0;
                 if(markers[i].label === searchVal ||
                                 markers[i].place === searchVal){
                     console.log(markers[i].place);
-                    displayWikipedia(markers[i].place);
+
+                    var myAddress = markers[i].place.split(' ');
+                    var finalAdd = "";
+                    for (var j = 0; j < myAddress.length; j++) {
+                        if(myAddress[j] === "NSW"){
+                        break;
+                    }
+                        finalAdd += myAddress[j];
+                    }
+
+                    displayWikipedia(finalAdd);
+                    displayFlickr(finalAdd);
                 }
             }
+        }
+
+        function displayFlickr(address){
+            var $flickrElem = $('#Flickr-links');
+            $flickrElem.text("");
+            var flickr = new Flickr({
+                api_key: "c97286d1897feed59cb562443dc35209"
+            });
+
+            flickr.photos.search({
+                text: address
+            }, function(err, result) {
+
+                if(err) { throw new Error(err); }
+
+                console.log(result);
+                if (result.photos.photo.length != 0) {
+                    console.log("after " + result.photos.photo.length);
+                    var size = result.photos.photo.length > 3 ? 3 : result.photos.photo.length;
+                    for (var i = 0; i < size; i++) {
+                        var flick = result.photos.photo[i];
+                        var url = "https://farm"+flick.farm + ".staticflickr.com/"+flick.server+"/"+flick.id+"_"+flick.secret+".jpg";
+                        $flickrElem.append('<div class="col-md-4"><img class="img-thumbnail" src="'+url+'"></div>');
+
+                    }
+                }
+
+            });
+
         }
 
 
         function displayWikipedia(address) {
 
-            var myAddress = address.split(' ');
-            var finalAdd = "";
-            for (var j = 0; j < myAddress.length; j++) {
-                if(myAddress[j] === "NSW"){
-                    break;
-                }
-                finalAdd += myAddress[j];
-            }
-
 
             var $wikiElem = $('#wikipedia-links');
             $wikiElem.text("");
-            var wikiURL = "https://en.wikipedia.org/w/api.php?action=opensearch&search="+finalAdd+"&format=json";
+            var wikiURL = "https://en.wikipedia.org/w/api.php?action=opensearch&search="+address+"&format=json";
 
             var wikiRequestTimeout = setTimeout(function(){
                 $wikiElem.text("failed to get wikipedia resources");
@@ -61,16 +92,13 @@ var labelIndex = 0;
                     // Handle or verify the server response if necessary.
                     var articleList = result[1];
                     var size = 0;
-                    if (articleList.length>5) {
-                        size=5
-                    }else{
-                        size=articleList.length;
-                    }
+                    size = articleList.length>3 ? 3 : articleList.length;
+
                     console.log(articleList.length);
                     for(var i=0;i<size;i++){
                         articleStr = articleList[i];
                         var url='http://en.wikipedia.org/wiki/' + articleStr;
-                        $wikiElem.append('<li><a href="'+url+'">' + articleStr + '</a></li>');
+                        $wikiElem.append('<li><a class="link" href="'+url+'">' + articleStr + '</a></li>');
                     };
                 clearTimeout(wikiRequestTimeout);
                 }

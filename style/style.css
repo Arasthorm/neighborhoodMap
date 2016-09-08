@@ -38,4 +38,23 @@
         padding-left: 10px;
       }
 
+      .link {
+        color: gray;
+        text-decoration: none;
+       }
+
+      .link:visited {
+        color: gray;
+       }
+
+      .link:hover {
+        text-decoration: underline;
+       }
+
+       img {
+            width : 250px;
+            height: 250px;
+       }
+
+
 
