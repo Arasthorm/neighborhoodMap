@@ -29,15 +29,17 @@ var labelIndex = 0;
                                 markers[i].place === searchVal){
                     console.log(markers[i].place);
 
-                    var myAddress = markers[i].place.split(' ');
+                    var myAddress = markers[i].place.split(',');
+                    var mySpecificAdd = myAddress[0].split(' ');
                     var finalAdd = "";
-                    for (var j = 0; j < myAddress.length; j++) {
-                        if(myAddress[j] === "NSW"){
+                    for (var j = 0; j < mySpecificAdd.length; j++) {
+                        if(mySpecificAdd[j] === "NSW" || mySpecificAdd[j] === "ACT"){
                         break;
                     }
-                        finalAdd += myAddress[j];
+                        finalAdd += mySpecificAdd[j];
                     }
-
+                    finalAdd = finalAdd.replace(/[0-9]/g,'');
+                    console.log(finalAdd);
                     displayWikipedia(finalAdd);
                     displayFlickr(finalAdd);
                 }
@@ -64,13 +66,10 @@ var labelIndex = 0;
                     for (var i = 0; i < size; i++) {
                         var flick = result.photos.photo[i];
                         var url = "https://farm"+flick.farm + ".staticflickr.com/"+flick.server+"/"+flick.id+"_"+flick.secret+".jpg";
-                        $flickrElem.append('<div class="col-md-4"><img class="img-thumbnail" src="'+url+'"></div>');
-
+                        $flickrElem.append('<div imageURL="'+url+'" class="col-md-6 col-lg-4 picture-tile" data-toggle="modal" data-target="#picture"><img class="imgSmall" src="'+url+'"></div>');
                     }
                 }
-
             });
-
         }
 
 
@@ -92,7 +91,7 @@ var labelIndex = 0;
                     // Handle or verify the server response if necessary.
                     var articleList = result[1];
                     var size = 0;
-                    size = articleList.length>3 ? 3 : articleList.length;
+                    size = articleList.length>6 ? 6 : articleList.length;
 
                     console.log(articleList.length);
                     for(var i=0;i<size;i++){
@@ -151,6 +150,18 @@ var labelIndex = 0;
 
             });
         }
+
+         $(document).on('.hanging-close, .modal-backdrop, .modal', function (event) {
+            // Remove the src so the player itself gets removed, as this is the only
+            // reliable way to ensure the video stops playing in IE
+            $("#picture-container").empty();
+        });
+
+         $(document).on('click', '.picture-tile', function (event) {
+            console.log("cliked");
+            var imageURL = $(this).attr('imageURL');
+            $("#picture-container").empty().append('<img class="imgBig" src="'+imageURL+'"></div>');
+        });
 
 
 

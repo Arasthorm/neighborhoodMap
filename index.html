@@ -11,11 +11,23 @@
 
 <body>
 
+    <div class="modal" id="picture">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <a href="#" class="hanging-close" data-dismiss="modal" aria-hidden="true">
+            <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&h=24"/>
+          </a>
+          <div  id="picture-container">
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div id="floating-panel-search">
       <input type="text" id="searchValue">
       <input onclick="searchMarker();" type="button" id="getMarker" value="submit">
     </div>
-    <div id="map" data-bind="click: selectInMap">
+    <div id="map">
 
     </div>
 
@@ -29,17 +41,17 @@
                     </div>
                 </div>
 
-
                 <div class="col-md-6" style="border-left: solid;">
                     <h3>Flickr:</h3>
                     <div class="row" id="Flickr-links">
-
 
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
 
     <script src="js/node_modules/flickrapi/browser/flickrapi.js"></script>
     <script src="libs/jquery.min.js"></script>

@@ -51,10 +51,37 @@
         text-decoration: underline;
        }
 
-       img {
-            width : 250px;
-            height: 250px;
+       .imgSmall {
+            width : 150px;
+            height: 150px;
        }
+
+       .imgBig {
+            width: 100%;
+       }
+
+       #picture .modal-dialog {
+            margin-top: 200px;
+            width: 640px;
+            height: 480px;
+        }
+        .hanging-close {
+            position: absolute;
+            top: -5px;
+            right: -12px;
+            z-index: 9001;
+        }
+
+        .picture-tile {
+            margin-bottom: 20px;
+            padding-top: 20px;
+        }
+        .picture-tile:hover {
+            background-color: #EEE;
+            cursor: pointer;
+        }
+
+
 
 
 
