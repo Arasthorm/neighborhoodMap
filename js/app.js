@@ -22,26 +22,31 @@ var labelIndex = 0;
 
     }
 
+        function treatPlace(p) {
+
+            var myAddress = p.place.split(',');
+            var mySpecificAdd = myAddress[0].split(' ');
+            var finalAdd = "";
+            for (var j = 0; j < mySpecificAdd.length; j++) {
+                if(mySpecificAdd[j] === "NSW" || mySpecificAdd[j] === "ACT"){
+                    break;
+                }
+                    finalAdd += mySpecificAdd[j];
+                }
+            finalAdd = finalAdd.replace(/[0-9]/g,'');
+            return finalAdd;
+        }
+
         function searchMarker(){
             var searchVal = document.getElementById("searchValue").value;
             for (var i = 0; i < markers.length; i++) {
                 if(markers[i].label === searchVal ||
                                 markers[i].place === searchVal){
-                    console.log(markers[i].place);
 
-                    var myAddress = markers[i].place.split(',');
-                    var mySpecificAdd = myAddress[0].split(' ');
-                    var finalAdd = "";
-                    for (var j = 0; j < mySpecificAdd.length; j++) {
-                        if(mySpecificAdd[j] === "NSW" || mySpecificAdd[j] === "ACT"){
-                        break;
-                    }
-                        finalAdd += mySpecificAdd[j];
-                    }
-                    finalAdd = finalAdd.replace(/[0-9]/g,'');
-                    console.log(finalAdd);
-                    displayWikipedia(finalAdd);
-                    displayFlickr(finalAdd);
+                    var finalADD = treatPlace(markers[i]);
+                    console.log(finalADD);
+                    displayWikipedia(finalADD);
+                    displayFlickr(finalADD);
                 }
             }
         }
@@ -66,7 +71,7 @@ var labelIndex = 0;
                     for (var i = 0; i < size; i++) {
                         var flick = result.photos.photo[i];
                         var url = "https://farm"+flick.farm + ".staticflickr.com/"+flick.server+"/"+flick.id+"_"+flick.secret+".jpg";
-                        $flickrElem.append('<div imageURL="'+url+'" class="col-md-6 col-lg-4 picture-tile" data-toggle="modal" data-target="#picture"><img class="imgSmall" src="'+url+'"></div>');
+                        $flickrElem.append('<div imageURL="'+url+'" class="col-md-6 col-lg-4 picture-tile img-responsive" data-toggle="modal" data-target="#picture"><img class="imgSmall" src="'+url+'"></div>');
                     }
                 }
             });
@@ -74,7 +79,6 @@ var labelIndex = 0;
 
 
         function displayWikipedia(address) {
-
 
             var $wikiElem = $('#wikipedia-links');
             $wikiElem.text("");
@@ -109,13 +113,12 @@ var labelIndex = 0;
 
             var address;
             var geocoder = new google.maps.Geocoder;
+            var infoWindow = new google.maps.InfoWindow;
             var marker = new google.maps.Marker({
                 position: location,
-                map: map,
                 label: labels[labelIndex++ % labels.length],
                 place: address
             });
-            var infoWindow = new google.maps.InfoWindow;
 
             geocoder.geocode({'location':location}, function(results,status){
                 if (status == 'OK'){
@@ -130,6 +133,8 @@ var labelIndex = 0;
                 marker.place = address;
                 markers.push(marker);
                 infoWindow.setContent(marker.place);
+                displayWikipedia(treatPlace(marker));
+                displayFlickr(treatPlace(marker));
             });
 
             marker.addListener('mouseover',function(){

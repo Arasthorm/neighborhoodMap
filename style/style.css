@@ -24,10 +24,10 @@
 
       #floating-panel-thirdParty {
         position: absolute;
-        top: 750px;
+        top: 400px;
         left: 13%;
         margin-left: -180px;
-        width: 1500px;
+        width: 100%;
         z-index: 5;
         background-color: #fff;
         padding: 5px;
