@@ -1,4 +1,0 @@
-Flickr:
-
-key : c97286d1897feed59cb562443dc35209
-Secret : 61e21b29d75bc259

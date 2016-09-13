@@ -1,8 +1,9 @@
-function getFlickr(address){
+function getFlickr(address,marker){
 
     var urls = [];
     var $flickrElem = $('#Flickr-links');
     $flickrElem.text("");
+
 
     var flickr = new Flickr({
         api_key: "c97286d1897feed59cb562443dc35209"
@@ -25,13 +26,14 @@ function getFlickr(address){
             }
         }
 
-    return urls;
+    marker.flickr = urls;
+    displayFlickr(urls);
 
     });
 }
 
 
-function getWikipedia(address) {
+function getWikipedia(address,marker) {
 
     var $wikiElem = $('#wikipedia-links');
     $wikiElem.text("");
@@ -46,7 +48,9 @@ function getWikipedia(address) {
         dataType:'jsonp',
         success: function(result) {
         // Handle or verify the server response if necessary.
-            return result[1];
+            marker.wiki = result[1];
+            displayWikipedia(result[1]);
+            clearTimeout(wikiRequestTimeout);
         }
     });
 }

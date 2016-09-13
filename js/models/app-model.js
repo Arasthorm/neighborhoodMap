@@ -2,23 +2,31 @@ var markers = [];
 var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 var labelIndex = 0;
 
-function getAddress(location){
+function setMarkerFields(location,geocoder,marker,infoWindow){
 
     var address;
 
     geocoder.geocode({'location':location}, function(results,status){
         if (status == 'OK'){
             if(results[1]){
+
                 address = results[1].formatted_address;
+                marker.place = address;
+
+                infoWindow.setContent(marker.place);
+                finalAdd = treatPlace(marker);
+
+                getWikipedia(finalAdd,marker);
+                getFlickr(finalAdd,marker);
+
             }else{
                 address = 'no results found';
             }
         } else {
             address = "not enable due to: "+status;
         }
-    }
 
-    return address;
+    });
 }
 
 function treatPlace(p) {
@@ -51,17 +59,12 @@ function addMarker(location,map){
         position: location,
         label: labels[labelIndex++ % labels.length],
         place: address,
+        map: map,
         wiki: wikipedia,
         flickr: flickr
     });
 
-    marker.place = getAddress(location);
-
-    infoWindow.setContent(marker.place);
-    finalAdd = treatPlace(marker);
-
-    marker.wiki = getWikipedia(finalAdd);
-    marker.flickr = getFlickr(finalAdd);
+    setMarkerFields(location,geocoder,marker,infoWindow);
 
     markers.push(marker);
 

@@ -14,8 +14,6 @@ function initMap() {
         map.addListener('click', function(event){
             console.log(event.latLng.lat());
             marker = addMarker(event.latLng,map);
-            displayWikipedia(marker.wikipedia);
-            displayFlickr(marker.flickr);
         });
     }
 
@@ -26,9 +24,7 @@ function searchMarker(){
         if(markers[i].label === searchVal ||
                     markers[i].place === searchVal){
 
-            var finalADD = treatPlace(markers[i]);
-            console.log(finalADD);
-            displayWikipedia(markers[i].wikipedia);
+            displayWikipedia(markers[i].wiki);
             displayFlickr(markers[i].flickr);
         }
     }
@@ -61,3 +57,16 @@ function displayFlickr(flickrURLS){
         $flickrElem.append('<div imageURL="'+flickrURLS[i]+'" class="col-md-6 col-lg-4 picture-tile img-responsive" data-toggle="modal" data-target="#picture"><img class="imgSmall" src="'+flickrURLS[i]+'"></div>');
     }
 }
+
+
+    $(document).on('.hanging-close, .modal-backdrop, .modal', function (event) {
+        // Remove the src so the player itself gets removed, as this is the only
+        // reliable way to ensure the video stops playing in IE
+        $("#picture-container").empty();
+    });
+
+    $(document).on('click', '.picture-tile', function (event) {
+        console.log("cliked");
+        var imageURL = $(this).attr('imageURL');
+        $("#picture-container").empty().append('<img class="imgBig" src="'+imageURL+'"></div>');
+    });
