@@ -6,7 +6,7 @@ function getFlickr(address,marker){
 
 
     var flickr = new Flickr({
-        api_key: "c97286d1897feed59cb562443dc35209"
+        api_key: "YOUR_FLICKR_API_KEY"
     });
 
     flickr.photos.search({
@@ -54,3 +54,4 @@ function getWikipedia(address,marker) {
         }
     });
 }
+
